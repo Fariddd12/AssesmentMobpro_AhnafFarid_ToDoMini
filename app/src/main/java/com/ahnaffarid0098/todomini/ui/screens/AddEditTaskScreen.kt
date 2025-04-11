@@ -9,6 +9,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
 import com.ahnaffarid0098.todomini.R
 import com.ahnaffarid0098.todomini.viewmodel.TaskViewModel
 
@@ -32,28 +34,42 @@ fun AddEditTaskScreen(
                     .padding(16.dp)
                     .fillMaxWidth()
             ) {
+                Image(
+                    painter = painterResource(id = R.drawable.writing),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(160.dp)
+                        .align(Alignment.CenterHorizontally)
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
                 OutlinedTextField(
                     value = title,
                     onValueChange = { title = it },
-                    label = { Text(text = stringResource(R.string.title)) },
+                    label = { Text(stringResource(R.string.title)) },
                     modifier = Modifier.fillMaxWidth()
                 )
+
                 Spacer(modifier = Modifier.height(8.dp))
+
                 OutlinedTextField(
                     value = description,
                     onValueChange = { description = it },
-                    label = { Text(text = stringResource(R.string.description)) },
+                    label = { Text(stringResource(R.string.description)) },
                     modifier = Modifier.fillMaxWidth()
                 )
+
                 Spacer(modifier = Modifier.height(16.dp))
+
                 Button(
                     onClick = {
                         taskViewModel.addTask(title, description)
-                        navController.popBackStack() // kembali ke daftar
+                        navController.popBackStack()
                     },
                     modifier = Modifier.align(Alignment.End)
                 ) {
-                    Text(text = stringResource(R.string.save))
+                    Text(stringResource(R.string.save))
                 }
             }
         }

@@ -1,6 +1,6 @@
 package com.ahnaffarid0098.todomini.ui.screens
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -24,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -48,12 +50,25 @@ fun TaskListScreen(
         }
     ) { padding ->
         if (tasks.isEmpty()) {
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .padding(padding),
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = stringResource(R.string.no_tasks))
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.folder),
+                        contentDescription = null,
+                        modifier = Modifier.size(140.dp)
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(text = stringResource(R.string.no_tasks))
+                }
             }
         } else {
             LazyColumn(modifier = Modifier.padding(padding)) {
@@ -63,22 +78,40 @@ fun TaskListScreen(
                             .fillMaxWidth()
                             .padding(vertical = 4.dp),
                         colors = CardDefaults.cardColors(
-                            containerColor = if (task.isDone) MaterialTheme.colorScheme.secondaryContainer
-                            else MaterialTheme.colorScheme.surface
+                            containerColor = if (task.isDone)
+                                MaterialTheme.colorScheme.secondaryContainer
+                            else
+                                MaterialTheme.colorScheme.surface
                         )
                     ) {
                         Column(modifier = Modifier.padding(16.dp)) {
-                            Text(
-                                text = task.title,
-                                style = MaterialTheme.typography.titleMedium,
-                                color = if (task.isDone) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
-                            )
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.checklist),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .size(24.dp)
+                                        .padding(end = 8.dp)
+                                )
+                                Text(
+                                    text = task.title,
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = if (task.isDone)
+                                        MaterialTheme.colorScheme.primary
+                                    else
+                                        MaterialTheme.colorScheme.onSurface
+                                )
+                            }
+
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
                                 text = task.description,
                                 style = MaterialTheme.typography.bodyMedium
                             )
                             Spacer(modifier = Modifier.height(8.dp))
+
                             Row {
                                 Button(
                                     onClick = { taskViewModel.toggleDone(task.id) }
@@ -90,7 +123,9 @@ fun TaskListScreen(
                                             stringResource(R.string.done)
                                     )
                                 }
+
                                 Spacer(modifier = Modifier.width(8.dp))
+
                                 Button(
                                     onClick = { taskViewModel.deleteTask(task.id) },
                                     colors = ButtonDefaults.buttonColors(
@@ -105,19 +140,5 @@ fun TaskListScreen(
                 }
             }
         }
-    }
-}
-
-@Composable
-fun TaskItem(title: String, isDone: Boolean, onClick: () -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(text = title)
-        Text(text = if (isDone) "✓" else "")
     }
 }
