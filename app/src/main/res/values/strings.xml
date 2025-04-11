@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">ToDoMini</string>
+        <string name="app_name">ToDoMini</string>
+        <string name="no_tasks">No tasks available.</string>
+        <string name="add_task">Add Task</string>
+        <string name="title">Title</string>
+        <string name="description">Description</string>
+        <string name="save">Save</string>
+        <string name="delete">Delete</string>
+        <string name="done">Done</string>
+        <string name="undo">Undo</string>
 </resources>

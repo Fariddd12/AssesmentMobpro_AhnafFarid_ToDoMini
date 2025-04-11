@@ -1,19 +1,35 @@
 package com.ahnaffarid0098.todomini.ui.screens
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.*
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.ahnaffarid0098.todomini.R
 import com.ahnaffarid0098.todomini.viewmodel.TaskViewModel
-import androidx.compose.foundation.lazy.items
 
 @Composable
 fun TaskListScreen(
@@ -27,7 +43,7 @@ fun TaskListScreen(
             FloatingActionButton(onClick = {
                 navController.navigate("add_edit_task")
             }) {
-                Icon(Icons.Default.Add, contentDescription = "Tambah")
+                Text(text = stringResource(R.string.add_task))
             }
         }
     ) { padding ->
@@ -37,7 +53,7 @@ fun TaskListScreen(
                 .padding(padding),
                 contentAlignment = Alignment.Center
             ) {
-                Text("Belum ada tugas.")
+                Text(text = stringResource(R.string.no_tasks))
             }
         } else {
             LazyColumn(modifier = Modifier.padding(padding)) {
@@ -67,7 +83,12 @@ fun TaskListScreen(
                                 Button(
                                     onClick = { taskViewModel.toggleDone(task.id) }
                                 ) {
-                                    Text(if (task.isDone) "Batalkan" else "Selesai")
+                                    Text(
+                                        text = if (task.isDone)
+                                            stringResource(R.string.undo)
+                                        else
+                                            stringResource(R.string.done)
+                                    )
                                 }
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Button(
@@ -76,7 +97,7 @@ fun TaskListScreen(
                                         containerColor = MaterialTheme.colorScheme.error
                                     )
                                 ) {
-                                    Text("Hapus")
+                                    Text(stringResource(R.string.delete))
                                 }
                             }
                         }

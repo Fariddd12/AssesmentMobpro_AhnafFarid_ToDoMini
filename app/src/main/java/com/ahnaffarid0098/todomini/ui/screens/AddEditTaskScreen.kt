@@ -5,11 +5,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.ahnaffarid0098.todomini.R
 import com.ahnaffarid0098.todomini.viewmodel.TaskViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddEditTaskScreen(
     navController: NavController,
@@ -20,7 +23,7 @@ fun AddEditTaskScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("Tambah Tugas") })
+            TopAppBar(title = { Text(text = stringResource(R.string.add_task)) })
         },
         content = { padding ->
             Column(
@@ -32,14 +35,14 @@ fun AddEditTaskScreen(
                 OutlinedTextField(
                     value = title,
                     onValueChange = { title = it },
-                    label = { Text("Judul") },
+                    label = { Text(text = stringResource(R.string.title)) },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = description,
                     onValueChange = { description = it },
-                    label = { Text("Deskripsi") },
+                    label = { Text(text = stringResource(R.string.description)) },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(16.dp))
@@ -50,7 +53,7 @@ fun AddEditTaskScreen(
                     },
                     modifier = Modifier.align(Alignment.End)
                 ) {
-                    Text("Simpan")
+                    Text(text = stringResource(R.string.save))
                 }
             }
         }
