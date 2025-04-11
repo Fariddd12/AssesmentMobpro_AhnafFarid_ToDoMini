@@ -3,7 +3,6 @@ package com.ahnaffarid0098.todomini.ui.screens
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
@@ -14,13 +13,14 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.ahnaffarid0098.todomini.viewmodel.TaskViewModel
+import androidx.compose.foundation.lazy.items
 
 @Composable
 fun TaskListScreen(
     navController: NavController,
     taskViewModel: TaskViewModel = viewModel()
 ) {
-    val tasks = taskViewModel.tasks
+    val tasks = taskViewModel.tasks.value
 
     Scaffold(
         floatingActionButton = {
@@ -40,19 +40,47 @@ fun TaskListScreen(
                 Text("Belum ada tugas.")
             }
         } else {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-            ) {
+            LazyColumn(modifier = Modifier.padding(padding)) {
                 items(tasks) { task ->
-                    TaskItem(
-                        title = task.title,
-                        isDone = task.isDone,
-                        onClick = {
-                            // Nanti bisa navigate ke edit
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = if (task.isDone) MaterialTheme.colorScheme.secondaryContainer
+                            else MaterialTheme.colorScheme.surface
+                        )
+                    ) {
+                        Column(modifier = Modifier.padding(16.dp)) {
+                            Text(
+                                text = task.title,
+                                style = MaterialTheme.typography.titleMedium,
+                                color = if (task.isDone) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = task.description,
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Row {
+                                Button(
+                                    onClick = { taskViewModel.toggleDone(task.id) }
+                                ) {
+                                    Text(if (task.isDone) "Batalkan" else "Selesai")
+                                }
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Button(
+                                    onClick = { taskViewModel.deleteTask(task.id) },
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = MaterialTheme.colorScheme.error
+                                    )
+                                ) {
+                                    Text("Hapus")
+                                }
+                            }
                         }
-                    )
+                    }
                 }
             }
         }
