@@ -12,7 +12,7 @@ class TaskViewModel : ViewModel() {
 
     fun addTask(title: String, description: String) {
         val newTask = Task(id = nextId++, title = title, description = description)
-        _tasks.value = _tasks.value + newTask
+        _tasks.value += newTask
     }
 
     fun deleteTask(taskId: Int) {
