@@ -18,7 +18,7 @@ import com.ahnaffarid0098.todomini.viewmodel.TaskViewModel
 @Composable
 fun AddEditTaskScreen(
     navController: NavController,
-    taskViewModel: TaskViewModel = viewModel()
+    taskViewModel: TaskViewModel
 ) {
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }

@@ -1,6 +1,8 @@
 package com.ahnaffarid0098.todomini.ui.screens
 
 import androidx.compose.foundation.Image
+import android.content.Intent
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,7 +38,7 @@ import com.ahnaffarid0098.todomini.viewmodel.TaskViewModel
 @Composable
 fun TaskListScreen(
     navController: NavController,
-    taskViewModel: TaskViewModel = viewModel()
+    taskViewModel: TaskViewModel
 ) {
     val tasks = taskViewModel.tasks.value
 
@@ -112,10 +114,10 @@ fun TaskListScreen(
                             )
                             Spacer(modifier = Modifier.height(8.dp))
 
+                            val context = LocalContext.current
+
                             Row {
-                                Button(
-                                    onClick = { taskViewModel.toggleDone(task.id) }
-                                ) {
+                                Button(onClick = { taskViewModel.toggleDone(task.id) }) {
                                     Text(
                                         text = if (task.isDone)
                                             stringResource(R.string.undo)
@@ -133,6 +135,20 @@ fun TaskListScreen(
                                     )
                                 ) {
                                     Text(stringResource(R.string.delete))
+                                }
+
+                                Spacer(modifier = Modifier.width(8.dp))
+
+                                Button(
+                                    onClick = {
+                                        val intent = Intent(Intent.ACTION_SEND).apply {
+                                            type = "text/plain"
+                                            putExtra(Intent.EXTRA_TEXT, "${task.title}\n\n${task.description}")
+                                        }
+                                        context.startActivity(Intent.createChooser(intent, "Bagikan tugas dengan..."))
+                                    }
+                                ) {
+                                    Text("Bagikan")
                                 }
                             }
                         }
