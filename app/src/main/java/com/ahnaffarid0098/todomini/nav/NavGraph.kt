@@ -6,8 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.ahnaffarid0098.todomini.ui.screens.TaskListScreen
 import com.ahnaffarid0098.todomini.ui.screens.AddEditTaskScreen
+import com.ahnaffarid0098.todomini.ui.screens.AboutScreen
 import com.ahnaffarid0098.todomini.viewmodel.TaskViewModel
-
 
 @Composable
 fun AppNavGraph(
@@ -21,6 +21,8 @@ fun AppNavGraph(
         composable("add_edit_task") {
             AddEditTaskScreen(navController, taskViewModel)
         }
+        composable("about") {
+            AboutScreen()
+        }
     }
 }
-
