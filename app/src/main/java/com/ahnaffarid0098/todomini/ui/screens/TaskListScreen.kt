@@ -70,7 +70,7 @@ fun TaskListScreen(
                         Image(
                             painter = painterResource(id = R.drawable.folder),
                             contentDescription = null,
-                            modifier = Modifier.size(120.dp)
+                            modifier = Modifier.size(140.dp)
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(text = stringResource(R.string.no_tasks))
