@@ -21,7 +21,7 @@ fun AboutScreen() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(id = R.drawable.folder),
+            painter = painterResource(id = R.drawable.logotodomini),
             contentDescription = null,
             modifier = Modifier.size(100.dp)
         )
@@ -29,7 +29,7 @@ fun AboutScreen() {
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "ToDoMini",
+            text = "ToDo Mini",
             style = MaterialTheme.typography.headlineMedium
         )
 
